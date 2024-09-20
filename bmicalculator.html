@@ -1,0 +1,166 @@
+`<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bmi calculator</title>
+  </head>
+  <style>
+    body {
+      height: 1000px;
+      background-color: black;
+    }
+    h1 {
+      text-align: center;
+      border-radius: 10px;
+      background-color: black;
+      color: red;
+      border: solid red 1px;
+    }
+    form {
+      text-align: center;
+      padding: 10px 350px;
+      background-color: black;
+      border: solid red 1px;
+      border-radius: 10px;
+    }
+
+    form > h3 {
+      text-align: center;
+      margin-left: 150px;
+      width: 60%;
+      height: 20px;
+      text-align: center;
+      background-color: red;
+      color: aliceblue;
+      padding: 10px;
+    }
+
+    #height,
+    #weight,
+    #name {
+      background-color: white;
+      color: black;
+      padding: 6px 40px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    table {
+      border-collapse: collapse;
+      align-items: center;
+      margin-left: 120px;
+      margin-top: 40px;
+    }
+
+    table td,
+    table th {
+      border: solid 1px black;
+      padding: 10px;
+      background-color: red;
+      color: black;
+      width: 300px;
+      align-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    input[type="submit"] {
+      background-color: red;
+      
+      font-size: 12px;
+      padding: 6px 20px;
+    }
+  </style>
+  <body>
+    <h1>BMI CALCULATOR</h1>
+    <form>
+      <h3>Enter your Name</h3>
+
+      <input type="text" placeholder="Enter your name " id="name" />
+
+      <h3>put your weight here in KG'S</h3>
+      <input type="number" placeholder="weight in kg's" id="weight" />
+      <h3>put your height here in CM'S</h3>
+      <input type="number" id="height" placeholder="height in cm's " /> <br />
+      <br />
+      <input type="submit" />
+      <div id="result"></div>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>weight</th>
+          <th>height</th>
+          <th>result</th>
+        </tr>
+      </thead>
+
+      <tbody></tbody>
+    </table>
+  </body>
+</html>
+<script>
+  document.querySelector("form").addEventListener("submit", bmifunction); // adding a event to submit button placed in from
+  function bmifunction() {
+    //  function call
+    event.preventDefault(); // to prevent default activity
+
+    // adding variables for input tags
+    let enrole = document.querySelector("#name").value;
+    let bodyweight = document.querySelector("#weight").value;
+    let bodyheight = document.querySelector("#height").value;
+
+    // using condition for not entering 0 value
+    if (
+      isNaN(bodyweight) ||
+      isNaN(bodyheight) ||
+      bodyheight <= 0 ||
+      bodyweight <= 0
+    ) {
+      alert("please enter valid weight and height values.");
+      return;
+    }
+    // adding data from js to table body by using append
+
+    let tr = document.createElement("tr");
+
+    let td1 = document.createElement("td");
+    td1.innerText = enrole;
+
+    let td2 = document.createElement("td");
+    td2.innerText = bodyweight;
+
+    let td3 = document.createElement("td");
+    td3.innerText = bodyheight;
+
+    let heightinmeters = bodyheight / 100;
+    bmi = (bodyweight / (heightinmeters * heightinmeters)).toFixed(2); //converting height centimeters to metters tofixed(2) was used to reduce or rounde figure the balance value of output
+
+    let td4 = document.createElement("td");
+    let report = "";
+    td4.innerText = bmi;
+    // using if else condition for conlusion
+
+    if (bmi <= 18.4) {
+      report = "(your under weight)";
+    } else if (bmi >= 18.5 && bmi <= 24.9) {
+      report = "(Normal weight)";
+    } else if (bmi >= 25 && bmi <= 29.9) {
+      report = "(Over weight)";
+    } else {
+         report = "(obese) ";
+    }
+    td4.innerText = bmi + " " + report;
+    tr.append(td1, td2, td3, td4);
+    document.querySelector("tbody").append(tr);
+
+    //  after submiting the data the input tags should be clear
+
+    document.querySelector("#name").value = "";
+    document.querySelector("#weight").value = "";
+    document.querySelector("#height").value = "";
+  }
+</script>
